@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Módulo: Ciberseguridad Personal</title>
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('✅ Service Worker registrado'))
+        .catch(err => console.error('❌ Error al registrar SW', err));
+    }
+  </script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f9fafb; color: #333; margin: 0; padding: 0; }
+    header { background-color: #0b5394; color: white; padding: 1rem; text-align: center; }
+    main { max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    section { background: #fff; padding: 1rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { color: #0b5394; }
+    label { display: block; margin-bottom: 0.5rem; }
+    button { background-color: #0b5394; color: white; border: none; padding: 0.7rem 1.5rem; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-top: 1rem; }
+    button:hover { background-color: #073763; }
+    .result { font-weight: bold; font-size: 1.2rem; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header><h1>Módulo Interactivo: Ciberseguridad Personal</h1></header>
+  <main>
+    <section>
+      <h2>🧠 Resumen del tema</h2>
+      <p>La ciberseguridad personal es el conjunto de prácticas y medidas que una persona toma para proteger su información digital, identidad y dispositivos frente a amenazas como virus, robo de datos, suplantación de identidad, etc. Implica crear contraseñas seguras, mantener software actualizado, evitar redes públicas inseguras, reconocer intentos de phishing y proteger la privacidad en redes sociales.</p>
+    </section>
+    <section><h2>📝 Evaluación interactiva</h2><form id="quizForm"></form>
+      <div style="text-align: center;"><button onclick="calificar()">Calificar</button></div>
+      <div class="result" id="resultado"></div>
+    </section>
+    <section><h2>📇 Flashcards de repaso</h2>
+      <ul>
+        <li><strong>Contraseña segura:</strong> combinación de letras, números y símbolos.</li>
+        <li><strong>Phishing:</strong> engaño para robar información personal usando correos o sitios falsos.</li>
+        <li><strong>Antivirus:</strong> software que detecta y elimina malware.</li>
+        <li><strong>Firewall:</strong> filtro que protege el tráfico de red.</li>
+        <li><strong>Red pública:</strong> conexión abierta con alto riesgo de interceptación.</li>
+      </ul>
+    </section>
+    <section><h2>🎮 Juego rápido: Adivina el término</h2>
+      <p><em>"Es una técnica de engaño digital para robar contraseñas o datos"</em></p>
+      <button onclick="alert('¡Correcto! Era phishing.')">Phishing</button>
+      <button onclick="alert('Incorrecto.')">Antivirus</button>
+      <button onclick="alert('Incorrecto.')">Firewall</button>
+    </section>
+  </main>
+  <script>
+    const preguntas = [
+      { pregunta: "¿Cuál es una buena práctica para crear contraseñas seguras?", opciones: ["Usar fechas de cumpleaños", "Utilizar solo letras minúsculas", "Combinar letras, números y símbolos", "Reutilizar contraseñas antiguas"], correcta: 2 },
+      { pregunta: "¿Qué significa tener la verificación en dos pasos activada?", opciones: ["Necesitar dos personas para iniciar sesión", "Requiere dos métodos para verificar identidad", "Es un tipo de contraseña compleja", "Compartir tu contraseña con dos contactos"], correcta: 1 }
+    ];
+    const form = document.getElementById('quizForm');
+    preguntas.forEach((p, index) => {
+      const div = document.createElement('div');
+      const qTitle = document.createElement('h3');
+      qTitle.textContent = `Pregunta ${index + 1}: ${p.pregunta}`;
+      div.appendChild(qTitle);
+      p.opciones.forEach((op, i) => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type='radio' name='q${index}' value='${i}'> ${op}`;
+        div.appendChild(label);
+      });
+      form.appendChild(div);
+    });
+    function calificar() {
+      let correctas = 0;
+      preguntas.forEach((p, index) => {
+        const seleccionada = document.querySelector(`input[name='q${index}']:checked`);
+        if (seleccionada && parseInt(seleccionada.value) === p.correcta) correctas++;
+      });
+      document.getElementById('resultado').textContent = `Obtuviste ${correctas} de ${preguntas.length} respuestas correctas.`;
+    }
+  </script>
+</body>
+</html>
